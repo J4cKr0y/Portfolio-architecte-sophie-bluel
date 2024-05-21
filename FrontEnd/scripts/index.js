@@ -10,32 +10,26 @@ function testifnull(truc) {
   if (typeof truc == 'null') {console.log(truc  +" est null");}
 }
 
-
 async function chargerMenu() {
   // Effectuer la requête GET
   const response = await fetch(cat);
   const categories = await response.json();
-  // Créez un élément <select>
-  var selectMenu = document.createElement('select');
-  selectMenu.id = 'monSelecteur';
-  selectMenu.onchange = function() {appelerFonction(this.value);};
+  const divFiltre = document.getElementById('filtre');
   // Parcourez les catégories et ajoutez-les au menu
-  const option = document.createElement('option');
-  option.value = "Tous"; 
-  option.textContent = "Tous les projets"; 
-  selectMenu.appendChild(option);
-  selectMenu.value = 'selectedValue';
+  const tous = document.createElement('div');
+  tous.id = 'tous';
+  tous.textContent = 'Tous';
+  tous.onclick = function() {appelerFonction(this.id);};
+  divFiltre.appendChild(tous);
   categories.forEach(category => {
-    const option = document.createElement('option');
-    option.value = category.name; // La valeur de l'option 
-    option.textContent = category.name; // Le texte affiché dans l'option
-    selectMenu.appendChild(option);
+    const option = document.createElement('div');
+    option.textContent = category.name;
+    option.id = category.name.split(' ')[0]; // La valeur de l'option (1er mot seulement)
+    option.onclick = function() {appelerFonction(this.id);};
+    divFiltre.appendChild(option);
   });
-  // Ajoutez le menu au DOM (par exemple, à un élément avec l'ID 'filtre')
-  const menuContainer = document.getElementById('filtre');
-  menuContainer.appendChild(selectMenu);
-} 
-const artSet = new Set();
+}
+
 let arts = []; //array
 async function chargerArticles() {
     try {
@@ -108,7 +102,7 @@ function fonction4() {
 
 function appelerFonction(valeur) {
   switch (valeur) {
-    case 'Tous':
+    case 'tous':
       removeGallery()
       chargerArticles();
       break;
@@ -120,7 +114,7 @@ function appelerFonction(valeur) {
       removeGallery()
       fonction3();
       break;
-    case 'Hotels & restaurants':
+    case 'Hotels':
       removeGallery()
       fonction4();
       break;
@@ -136,108 +130,3 @@ function appelerFonction(valeur) {
     chargerMenu();
     chargerArticles();
   }
-
-
-/*async function chargerArticles() {
-    try {
-      // Effectuer la requête GET
-      const reponse = await fetch(works);
-      const articles = await reponse.json();
-      // Sélectionner l'élément HTML où insérer les articles
-      var conteneur = document.getElementsByClassName('gallery');
-      // Parcourir chaque article et créer les éléments HTML
-      var artSet = new Set();
-      articles.forEach(article => {
-        var artId = article.categoryId;
-        artSet.add(artId);
-        const figure = document.createElement('figure');
-        figure.innerHTML = `
-        <img src="${article.imageUrl}" alt="Image de ${article.title}">
-          <figcaption>${article.title}</figcaption>
-        `;
-        // Insérer l'élément dans la page
-        conteneur[0].appendChild(figure);
-      });
-    } catch (erreur) {
-      console.error('Il y a eu un problème avec l\'opération fetch: ' + erreur.message);
-    }
-  }
-
-  async function chargerMenu() {
-    // Effectuer la requête GET
-    const response = await fetch(cat);
-    const categories = await response.json();
-  
-    // Créez un élément <select>
-    var selectMenu = document.createElement('select');
-    var monSelecteur = selectMenu.id
-    selectMenu.onchange = function() {appelerFonction(this.value);};
-    console.log(monSelecteur);
-    // Parcourez les catégories et ajoutez-les au menu
-    const option = document.createElement('option');
-    option.value = "Tous"; 
-    option.textContent = "Tous les projets"; 
-    selectMenu.appendChild(option);
-    var selectedValue = selectMenu.value;
-    categories.forEach(category => {
-      const option = document.createElement('option');
-      option.value = category.name; // La valeur de l'option 
-      option.textContent = category.name; // Le texte affiché dans l'option
-      selectMenu.appendChild(option);
-    });
-
-    // Ajoutez le menu au DOM (par exemple, à un élément avec l'ID 'filtre')
-    const menuContainer = document.getElementById('filtre');
-    menuContainer.appendChild(selectMenu);
-  } 
-
-function fonction2() {
-  for (let item of artSet) {
-    console.log(item);
-    if (item == 1) {
-      const figure = document.createElement('figure');
-      figure.innerHTML = `
-      <img src="${article.imageUrl}" alt="Image de ${article.title}">
-        <figcaption>${article.title}</figcaption>
-      `;
-      // Insérer l'élément dans la page
-      conteneur[0].appendChild(figure);
-    };
-    }
-  }
-
-function fonction3() {
-  console.log("Appartements appelée");
-}
-function fonction4() {
-  console.log("Hotels & restaurants appelée");
-}
-
-function appelerFonction(valeur) {
-  switch (valeur) {
-    case 'Tous':
-      chargerArticles();
-      break;
-    case 'Objets':
-      fonction2();
-      break;
-    case 'Appartements':
-      fonction3();
-      break;
-    case 'Hotels & restaurants':
-      fonction4();
-      break;
-    default:
-      console.log("Aucune fonction correspondante");
-  }
-}
-
-
-
-  // Appeler les fonctions au chargement de la page
-  window.onload = function() {
-    chargerMenu();
-    chargerArticles();
-  }
-*/
- 
