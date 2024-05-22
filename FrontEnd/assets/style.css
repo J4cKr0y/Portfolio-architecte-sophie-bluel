@@ -23,6 +23,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -46,20 +47,28 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+strong {
+	font-weight: 900;
+}
 /** end reset css**/
 body {
 	max-width: 1140px;
 	margin:auto;
-	font-family: 'Work Sans' ;
+	font-family: 'Work Sans';
 	font-size: 14px;
 }
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
 }
 section {
-	margin: 50px 0
+	margin: 50px 0;
+}
+
+a {
+	text-decoration:none;
+	color: black;
 }
 
 h1{
@@ -68,42 +77,47 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 20px;
 
 }
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
+nav li img {
+	height: 1rem;
+	font-weight: bold;
+}
 
-li:hover {
+a:hover, li:hover {
 	color: #B1663C;
+	cursor: default;
 }
 #introduction {
 	display: flex;
 	align-items: center;
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
 #introduction img {
 	display: block;
@@ -112,7 +126,7 @@ li:hover {
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -205,10 +219,39 @@ input[type="submit"]{
 	text-align: center;
 	border-radius: 60px ;
 }
-
+main #login {
+	display: flex;
+	flex-direction: column;	
+}
+#login h2 {
+	text-align: center;
+	padding-bottom: 30px;
+}
+#login label {
+	display: flex;
+	margin-left: 33%;
+	padding-top: 30px;
+	padding-bottom: 5px;
+}
+#login #email,#login #password {
+	display: flex;
+	align-self: center;
+	width: 33.3%;
+	height: 51px;
+	border: none;
+	background-color: white;
+	filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.1));
+}
+#login #se_connecter {
+	height: 36px;
+}
+#login a {
+	text-align: center;
+	text-decoration: underline #3D3D3D;
+}
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
