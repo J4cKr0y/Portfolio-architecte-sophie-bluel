@@ -18,12 +18,12 @@ document.getElementById('se_connecter').addEventListener('click', async function
             body: JSON.stringify(data),
         });
         if (response.status != 200) {
-            console.error('Erreur de connexion');
-            alert("ALARME ! Mauvais email ou mot de passe ! Déposez votre souris à terre et mettez les mains derrière la tête !");
+            console.error('ALARME ! Déposez votre souris à terre et mettez les mains derrière la tête !');
+            alert("Erreur de connexion. Veuillez vérifier votre adresse e-mail ou/et mot de passe, s'il vous plaît.");
             return;
         }
         const logs = await response.json();
-        console.log('Succès:', logs);
+        console.log('Succès:', logs, 'Bienvenue chez vous :)');
                 
             sessionStorage.setItem('connectOK', 'true'); // Stocke le fait que la connexion a été un succès    
             window.location.href = "index.html"; // Redirige vers index.html en cas de succès

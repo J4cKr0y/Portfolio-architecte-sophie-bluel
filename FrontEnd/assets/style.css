@@ -108,17 +108,71 @@ nav li img {
 	font-weight: bold;
 }
 
-a:hover, li:hover {
+a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	color: #B1663C;
 	cursor: default;
 }
+
+.modal {
+	display: none; 
+	position: fixed; /* Fixe même lors du défilement */
+	z-index: 1; /* superposition */
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%; 
+	overflow: auto; /* Permet le défilement si nécessaire */
+	background-color: rgba(0,0,0,0.3); /* Noir avec opacité 30%*/
+} 
+
+.modal-content {
+	margin: 15% auto; /* 15% du haut et centré horizontalement */
+	padding: 20px;
+	border-radius: 10px;
+	width: 45%; 
+	max-width: 630px; 
+	max-height: 688px;
+	background-color: #FFFFFF; 
+}
+
+.fa-xmark {
+	color: black;
+	float: right;
+	font-size: 24px;
+}
+.mini-gallery{
+	height: 70%;
+	width: 80%;
+	display: flex;
+	margin: 10%;
+	gap: 1%;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.mini-gallery  figure{
+	display: flex;
+	height: 32%;
+}
+
+.modifier {
+	display: none;
+	padding-left: 1%;
+}
+.fa-pen-to-square{
+	padding-right: 10%; 
+	font-weight: bold;
+	font-size: 18px;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
 }
+
 #introduction figure {
 	flex: 1;
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -128,6 +182,7 @@ a:hover, li:hover {
 #introduction article {
 	flex: 1;
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
@@ -135,14 +190,17 @@ a:hover, li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #filtre {
 	display: flex;
 	flex-wrap: nowrap;
-	padding-bottom: 2em;
+	padding-top: 5em;
+	padding-bottom: 4em;
 	gap: 15px; 
 	justify-content: center;
     
 }
+
 #tous, #Objets, #Appartements, #Hotels {
 	height: 37px;
 	line-height: 37px;
@@ -150,7 +208,7 @@ a:hover, li:hover {
     border-radius: 25px / 25px; 
     padding-left:3%;
     padding-right:3%;
-	font-family: 'Syne';
+	font-family: 'Syne', 'Calibri', sans-serif;
 	color: #1D6154;
 	font-weight: 700;
 	font-size: 16px;
@@ -162,10 +220,23 @@ a:hover, li:hover {
 	cursor: default;
 } 
 
-#portfolio h2 {
+.projets {
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	padding-top: 6em;
 	text-align: center;
-	margin-bottom: 1em;
 }
+.projets h2 {
+	font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+	font-size: 26px;
+}
+#portfolio h2 {
+	display: flex;
+	text-align: center; 
+	padding-left: 6%;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;

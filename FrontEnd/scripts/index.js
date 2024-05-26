@@ -12,6 +12,7 @@ function testifnull(truc) {
 
 function isConnected() {
   if (sessionStorage.getItem('connectOK') === 'true') {
+    document.getElementById("editbtn").style.display = "flex";
     const loginLink = document.querySelector('a[href="login.html"]');
     if (loginLink) {
       loginLink.href = "index.html";
@@ -46,13 +47,14 @@ async function chargerFiltres() {
     divFiltre.appendChild(option);
   });
 }
-//<i class="fa-regular fa-pen-to-square"></i>
-let arts = []; //array
+
+var arts = []; //array
 async function chargerArticles() {
     try {
       const reponse = await fetch(works);
       const articles = await reponse.json();
       const conteneur = document.getElementsByClassName('gallery');
+      const cont2 = document.getElementsByClassName('mini-gallery');
       arts = [];
       articles.forEach(article => {
         arts.push({categoryId: article.categoryId,imageUrl: article.imageUrl,title: article.title});
@@ -61,7 +63,15 @@ async function chargerArticles() {
         <img src="${article.imageUrl}" alt="Image de ${article.title}">
           <figcaption>${article.title}</figcaption>
         `;
+        const fig = document.createElement('figure');
+        fig.innerHTML = `
+        <img src="${article.imageUrl}" alt="Image de ${article.title}">
+        `;
         conteneur[0].appendChild(figure);
+        cont2[0].appendChild(fig);
+        const trash = document.createElement('i');
+        trash.className = "fa-solid fa-trash-can";
+        fig.appendChild(trash);
       });
     } catch (erreur) {
       console.error('Il y a eu un problème avec l\'opération fetch: ' + erreur.message);
