@@ -67,11 +67,14 @@ async function chargerArticles() {
         fig.innerHTML = `
         <img src="${article.imageUrl}" alt="Image de ${article.title}">
         `;
+        const divTrash = document.createElement('div');
+        divTrash.classList.add('divTrash');
         conteneur[0].appendChild(figure);
         cont2[0].appendChild(fig);
+        fig.appendChild(divTrash);
         const trash = document.createElement('i');
         trash.className = "fa-solid fa-trash-can";
-        fig.appendChild(trash);
+        divTrash.appendChild(trash);
       });
     } catch (erreur) {
       console.error('Il y a eu un problème avec l\'opération fetch: ' + erreur.message);

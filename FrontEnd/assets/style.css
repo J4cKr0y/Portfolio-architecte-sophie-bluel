@@ -152,8 +152,24 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 .mini-gallery  figure{
 	display: flex;
 	height: 32%;
+	justify-content: right;
+	position: relative;
 }
-
+.divTrash{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	position: absolute;
+    top: 0;
+    right: 0;
+	background-color: black;
+	border-radius: 25%;
+	padding: 5%;
+	margin: 5%;
+}
+.fa-trash-can{
+	color: #FFFFFF;
+}
 .modifier {
 	display: none;
 	padding-left: 1%;
