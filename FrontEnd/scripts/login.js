@@ -1,4 +1,4 @@
-const login = "http://localhost:5678/api/users/login";
+const login = "http://localhost:5678/api/users/login/";
 const inputEmail = document.getElementById("email");
 const inputPassword = document.getElementById("password");
 const loginError = document.getElementById("login_error");
@@ -26,6 +26,8 @@ document.getElementById('se_connecter').addEventListener('click', async function
         console.log('Succès:', logs, 'Bienvenue chez vous :)');
                 
             sessionStorage.setItem('connectOK', 'true'); // Stocke le fait que la connexion a été un succès    
+            localStorage.setItem('token', logs.token);
+            localStorage.setItem('userId', logs.userId);
             window.location.href = "index.html"; // Redirige vers index.html en cas de succès
     } catch (error) {
         console.error('Erreur:', error);

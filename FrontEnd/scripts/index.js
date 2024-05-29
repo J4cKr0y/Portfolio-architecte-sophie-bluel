@@ -1,7 +1,7 @@
 const api = "http://localhost:5678/api/";
-const cat = "http://localhost:5678/api/categories" 
+const cat = "http://localhost:5678/api/categories/" 
 //id : 1,name : Objets; 2,Appartements; 3,Hotels & restaurants
-const works = "http://localhost:5678/api/works";
+const works = "http://localhost:5678/api/works/";
 //id(1à11), title, imageUrl, categoryId, userId, category{id, name,Objets}
 
 
@@ -48,6 +48,24 @@ async function chargerFiltres() {
   });
 }
 
+async function delWorkById(iD) {
+  try {
+    console.log("fonction delWorkById chargée, "+iD+"va être supprimé");
+    const res = await fetch(works + iD, { method: 'DELETE', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
+    const del = await res.json();
+    testifnull(res);
+    testifnull(del);
+    if (res.status !== 200) {
+      console.error('Suppression impossible. On ne parle pas de Bruno, no, no, no !');
+      alert("Suppression impossible !");
+      return;
+    }
+    console.log('Élément supprimé: ', del, 'Mission accomplished !');
+  } catch (error) {
+    console.error('Erreur:', error);
+  }
+};
+
 var arts = []; //array
 async function chargerArticles() {
     try {
@@ -57,7 +75,7 @@ async function chargerArticles() {
       const cont2 = document.getElementsByClassName('mini-gallery');
       arts = [];
       articles.forEach(article => {
-        arts.push({categoryId: article.categoryId,imageUrl: article.imageUrl,title: article.title});
+        arts.push({id: article.id, categoryId: article.categoryId,imageUrl: article.imageUrl,title: article.title});
         const figure = document.createElement('figure');
         figure.innerHTML = `
         <img src="${article.imageUrl}" alt="Image de ${article.title}">
@@ -74,6 +92,14 @@ async function chargerArticles() {
         fig.appendChild(divTrash);
         const trash = document.createElement('i');
         trash.className = "fa-solid fa-trash-can";
+        trash.id = article.id;
+        trash.addEventListener('click', function() {
+            try {
+              delWorkById(trash.id);
+            } catch (error) {
+              console.error('Erreur:', error);
+            }
+          });
         divTrash.appendChild(trash);
       });
     } catch (erreur) {

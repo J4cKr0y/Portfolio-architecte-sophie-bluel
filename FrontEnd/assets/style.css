@@ -118,21 +118,31 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	position: fixed; /* Fixe même lors du défilement */
 	z-index: 1; /* superposition */
 	left: 0;
-	top: 0;
+	top: -50px;
 	width: 100%; 
 	height: 100%; 
-	overflow: auto; /* Permet le défilement si nécessaire */
 	background-color: rgba(0,0,0,0.3); /* Noir avec opacité 30%*/
+	justify-content: center;
 } 
 
 .modal-content {
-	margin: 15% auto; /* 15% du haut et centré horizontalement */
-	padding: 20px;
+	margin-top: 8%;
+	padding: 50px;
 	border-radius: 10px;
-	width: 45%; 
+	width: 100%; 
+	height: 100%;
 	max-width: 630px; 
 	max-height: 688px;
 	background-color: #FFFFFF; 
+	overflow: visible; /* Permet le défilement si nécessaire */
+	text-align: center;
+}
+.modal-content h1{
+	margin-top: 3%;
+	margin-bottom: -3%;
+	font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+	font-size: 26px;
+	color: black;
 }
 
 .fa-xmark {
@@ -141,7 +151,7 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	font-size: 24px;
 }
 .mini-gallery{
-	height: 70%;
+	height: 65%;
 	width: 80%;
 	display: flex;
 	margin: 10%;
@@ -149,9 +159,9 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
-.mini-gallery  figure{
+.mini-gallery figure{
 	display: flex;
-	height: 32%;
+	height: 26%;
 	justify-content: right;
 	position: relative;
 }
@@ -170,6 +180,31 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 .fa-trash-can{
 	color: #FFFFFF;
 }
+.fa-trash-can:hover{
+	color: #1D6154;
+}
+.mini-gallery_foot{
+	height: 20%;
+	width: 80%;
+	border-top: solid 2px #B3B3B3;
+	margin: auto;
+	align-content: center;
+}
+.mini-gallery_addbtn{
+	height: 47px;
+	width: 60%;
+	line-height: 47px;
+	margin: auto;
+	background-color:  #1D6154; 
+    border-radius: 25px / 25px; 
+    padding-left:3%;
+    padding-right:3%;
+	font-family: 'Syne', 'Calibri', sans-serif;
+	color: white;
+	font-weight: 700;
+	font-size: 18px;
+}
+
 .modifier {
 	display: none;
 	padding-left: 1%;
