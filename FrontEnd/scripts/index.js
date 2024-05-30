@@ -17,7 +17,9 @@ function isConnected() {
     if (loginLink) {
       loginLink.href = "index.html";
       loginLink.textContent = "logout";
-      loginLink.addEventListener('click', function() {sessionStorage.removeItem('connectOK');});
+      loginLink.addEventListener('click', function() {sessionStorage.removeItem('connectOK'); 
+                                                      sessionStorage.removeItem('token'); 
+                                                      sessionStorage.removeItem('userId');});
     }
   }
 }
@@ -49,22 +51,20 @@ async function chargerFiltres() {
 }
 
 async function delWorkById(iD) {
-  try {
     console.log("fonction delWorkById chargée, "+iD+"va être supprimé");
-    const res = await fetch(works + iD, { method: 'DELETE', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
-    const del = await res.json();
-    testifnull(res);
-    testifnull(del);
-    if (res.status !== 200) {
-      console.error('Suppression impossible. On ne parle pas de Bruno, no, no, no !');
-      alert("Suppression impossible !");
-      return;
-    }
-    console.log('Élément supprimé: ', del, 'Mission accomplished !');
-  } catch (error) {
-    console.error('Erreur:', error);
-  }
-};
+    const res = await fetch(works + iD, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token')},});
+    
+      if (res.ok) {
+        resetGallery();
+        resetMiniGallery();
+        chargerArticles();
+        console.log('Élément exterminé! Mission accomplished!');
+      } 
+      else {
+        console.log('Suppression impossible. On ne parle pas de Bruno, no, no, no !');
+        alert("Suppression impossible !");
+      } 
+}
 
 var arts = []; //array
 async function chargerArticles() {
@@ -96,6 +96,7 @@ async function chargerArticles() {
         trash.addEventListener('click', function() {
             try {
               delWorkById(trash.id);
+             
             } catch (error) {
               console.error('Erreur:', error);
             }
@@ -108,6 +109,12 @@ async function chargerArticles() {
 }
 function resetGallery() {
   const conteneur = document.querySelector('.gallery');
+  while (conteneur.firstChild) {
+    conteneur.removeChild(conteneur.firstChild);
+  }
+}
+function resetMiniGallery() {
+  const conteneur = document.querySelector('.mini-gallery');
   while (conteneur.firstChild) {
     conteneur.removeChild(conteneur.firstChild);
   }
