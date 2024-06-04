@@ -34,6 +34,8 @@ async function chargerFiltres() {
   // Effectuer la requête GET
   const response = await fetch(cat);
   const categories = await response.json();
+
+  // filtre de la page principale
   const divFiltre = document.getElementById('filtre');
   const tous = document.createElement('div');
   tous.classList.add('active');
@@ -48,6 +50,15 @@ async function chargerFiltres() {
     option.addEventListener('click', boutonFiltreActif);
     divFiltre.appendChild(option);
   });
+  
+  // filtres de la modale
+  const selectMenu = document.getElementById('cat-select');
+  categories.forEach(category => {
+    const opt = document.createElement('option');
+    opt.value = category.name; // La valeur de l'option 
+    opt.textContent = category.name; // Le texte affiché dans l'option
+    selectMenu.appendChild(opt); })
+  
 }
 
 async function delWorkById(iD) {
