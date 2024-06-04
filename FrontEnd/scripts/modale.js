@@ -66,8 +66,8 @@ fileInput.addEventListener('change', function() {
     imgPreview.alt = 'Aperçu de l\'image sélectionnée';
     imgPreview.style.width = 'auto'; 
     imgPreview.style.height = '76px';
-
-    if (previewContainer.tagName.toLowerCase() === 'i') {
+    imgPreview.style.marginTop = '5%';
+    if (previewContainer.tagName.toLowerCase() === 'I') {
       previewContainer.parentNode.replaceChild(imgPreview, previewContainer);
     } else {
       previewContainer.src = imageUrl;
@@ -89,26 +89,19 @@ document.getElementById("mg_validAddBtn").addEventListener("click", function() {
   }
 
   let categorySelect = document.getElementById("cat-select");
-  //let selectedOption = categorySelect.selectedOptions[0];
-  //let category = selectedOption ? selectedOption.value : '';
-  let category = categorySelect.selectedOptions[0];
+  let selectedOption = categorySelect.selectedOptions[0];
+  let category = selectedOption ? selectedOption.value : '';
+
   console.log("category : "+ category);
   if (!category) {
     alert("Veuillez sélectionner une catégorie s'il vous plaît.");
     return;
   }
 
-  let categoryId;
-  if (category == "Objets") { categoryId = 1; }
-  if (category == "Appartements") { categoryId = 2; }
-  if (category == "Hotels & restaurants") { categoryId = 3; }
-  categoryId = parseInt(categoryId);
-  console.log("categoryId : "+ categoryId);
   const formData = new FormData();
+  formData.append("image", image); 
   formData.append("title", title);
-  formData.append("imageUrl", image); 
-  formData.append("categoryId", categoryId); 
-  formData.append("userId", sessionStorage.getItem('userId'));
+  formData.append("category", category); 
   console.log("formData : "+  toString.formData);
   fetch(works, {
     method: "POST",

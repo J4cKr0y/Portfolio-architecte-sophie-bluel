@@ -55,7 +55,7 @@ async function chargerFiltres() {
   const selectMenu = document.getElementById('cat-select');
   categories.forEach(category => {
     const opt = document.createElement('option');
-    opt.value = category.name; // La valeur de l'option 
+    opt.value = category.id; // La valeur de l'option 
     opt.textContent = category.name; // Le texte affiché dans l'option
     selectMenu.appendChild(opt); })
   
@@ -63,7 +63,7 @@ async function chargerFiltres() {
 
 async function delWorkById(iD) {
     console.log("fonction delWorkById chargée, "+iD+"va être supprimé");
-    const res = await fetch(works + iD, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token')},});
+    const res = await fetch(works + iD, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('token')},});
     
       if (res.ok) {
         resetGallery();
