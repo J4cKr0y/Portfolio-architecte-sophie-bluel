@@ -105,12 +105,7 @@ async function chargerArticles() {
         trash.className = "fa-solid fa-trash-can";
         trash.id = article.id;
         trash.addEventListener('click', function() {
-            try {
-              delWorkById(trash.id);
-             
-            } catch (error) {
-              console.error('Erreur:', error);
-            }
+            delWorkById(trash.id);
           });
         divTrash.appendChild(trash);
       });

@@ -18,7 +18,7 @@ function drop(e) {
 }
 
 function handleFiles(files) {
-  for (let i = 0; i < files.length; i++) {
+  for file  (let i = 0; i < files.length; i++) {
     const file = files[i];
 
     if (!file.type.startsWith("image/")) {
@@ -69,9 +69,9 @@ depose.addEventListener("dragleave", function(evt) {
 /* Tranfert de la liste des fichiers du drag and drop dans input file */
 /* depose.addEventListener("drop", function(evt) {
   evt.preventDefault();
-  document.getElementById("filetoUpload").files=evt.dataTransfer.files; */
+  document.getElementById("filetoUpload").files=evt.dataTransfer.files; 
   //this.className=""; // Surbrillance supprimée 
-});
+}); */
 
 /* document.getElementById("filetoUpload").addEventListener("change", function(evt){
   const p=document.getElementById("preview"); // Bloc d'affichage de la liste des fichiers 

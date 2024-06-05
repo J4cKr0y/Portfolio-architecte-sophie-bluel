@@ -59,6 +59,8 @@ const previewContainer = document.getElementById('preview');
 fileInput.addEventListener('change', function() {
   if (fileInput.files.length > 0) {
     image = fileInput.files[0]; 
+    let imageSize = image.size/1024/1024;
+    if (imageSize > 4) { alert("Veuillez choisir une photo de moins de 4Mo s'il vous plaît."); return;};
     const imageUrl = URL.createObjectURL(image);
 
     let imgPreview = document.createElement('img');
@@ -66,17 +68,42 @@ fileInput.addEventListener('change', function() {
     imgPreview.alt = 'Aperçu de l\'image sélectionnée';
     imgPreview.style.width = 'auto'; 
     imgPreview.style.height = '76px';
-    imgPreview.style.marginTop = '5%';
-    if (previewContainer.tagName.toLowerCase() === 'I') {
-      previewContainer.parentNode.replaceChild(imgPreview, previewContainer);
-    } else {
-      previewContainer.src = imageUrl;
+    imgPreview.style.marginTop = '5%'; 
+
+    while (previewContainer.firstChild) {
+      previewContainer.removeChild(previewContainer.firstChild);
     }
+    previewContainer.appendChild(imgPreview);
   }
 });
 
+// Efacement de la preview, réinsertion de l'image fontawesone d'origine.
+function resetPreview() {
+  const previewContainer = document.getElementById('preview');
+  const baliseI = document.createElement('i');
+  baliseI.className = "fa-regular fa-image";
+  while (previewContainer.firstChild) {
+    previewContainer.removeChild(previewContainer.firstChild);
+  }
+  previewContainer.appendChild(baliseI);
+}
+
+function resetAll() {
+  resetPreview();
+  document.getElementById("modal-windowAdd").reset();
+  resetGallery();
+  resetMiniGallery();
+  chargerArticles();
+}
+
+document.getElementById("reset").addEventListener("click", function() {
+ resetAll();
+})
+
+
+
 // Envoi de l'image et de toutes les données connexes
-document.getElementById("mg_validAddBtn").addEventListener("click", function() {
+document.getElementById("mg_validAddBtn").addEventListener("click", async function() {
   if (!image) {
     alert("Veuillez ajouter une photo s'il vous plaît.");
     return;
@@ -103,7 +130,7 @@ document.getElementById("mg_validAddBtn").addEventListener("click", function() {
   formData.append("title", title);
   formData.append("category", category); 
   console.log("formData : "+  toString.formData);
-  fetch(works, {
+  const upload = await fetch(works, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -111,12 +138,13 @@ document.getElementById("mg_validAddBtn").addEventListener("click", function() {
     },
     body: formData,
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Réponse réseau non ok.');
-    }
-    return response.headers.get('content-type').includes('application/json') ? response.json() : response.text();
-  })
-  .then(data => console.log(data))
-  .catch(error => console.error('Erreur:', error));
+  if (upload.status != 201) {
+    console.error('ALARME ! Déposez votre souris à terre et mettez les mains derrière la tête !');
+    alert("Erreur.");
+    return;
+}
+  if (upload.status == 201) {
+    resetAll();
+    console.log('Élément envoyé! Mission accomplished!');
+  }
 });
