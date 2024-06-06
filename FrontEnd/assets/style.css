@@ -54,7 +54,7 @@ strong {
 body {
 	max-width: 1140px;
 	margin:auto;
-	font-family: 'Work Sans';
+	font-family: 'Work Sans', Arial, Helvetica, sans-serif;
 	font-size: 14px;
 }
 header {
@@ -74,20 +74,20 @@ a {
 h1{
 	display: flex;
 	flex-direction: column;
-	font-family: 'Syne';
+	font-family: 'Syne', 'Calibri', sans-serif;
 	font-size: 22px;
 	font-weight: 800;
 	color: #B1663C;
 }
 
 h1 > span {
-	font-family: 'Work Sans';
+	font-family: 'Work Sans', Arial, Helvetica, sans-serif;
 	font-size:10px;
 	letter-spacing: 0.1em;
 }
 
 h2{
-	font-family: 'Syne';
+	font-family: 'Syne', 'Calibri', sans-serif;
 	font-weight: 700;
 	font-size: 30px;
 	color: #1D6154;
@@ -111,6 +111,18 @@ nav li img {
 a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	color: #B1663C;
 	cursor: default;
+}
+
+.edition_ban{
+	display: none;
+	width: 100%;
+	height: 59px;
+	background-color: black;
+	color: white;
+	font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	text-align: center;
+	align-content: center;
 }
 
 .modal {
@@ -163,8 +175,15 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 .mini-gallery figure{
 	display: flex;
 	height: 26%;
+	width: 18%;
 	justify-content: right;
 	position: relative;
+	overflow: hidden;
+
+}
+.mini-gallery figure img {
+    object-fit: scale-down;
+	width: 100%;
 }
 .divTrash{
 	display: flex;
@@ -183,6 +202,7 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 }
 .fa-trash-can:hover{
 	color: #1D6154;
+	cursor: default;
 }
 .mini-gallery_foot{
 	height: 20%;
@@ -192,6 +212,35 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	align-content: center;
 }
 .mini-gallery_addbtn{
+	height: 47px;
+	width: 60%;
+	line-height: 47px;
+	margin: auto;
+	background-color:  #1D6154; 
+    border-radius: 25px / 25px; 
+    padding-left:3%;
+    padding-right:3%;
+	font-family: 'Syne', 'Calibri', sans-serif;
+	color: white;
+	font-weight: 700;
+	font-size: 18px;
+}
+.mini-gallery_addbtnOff{
+	height: 47px;
+	width: 60%;
+	line-height: 47px;
+	margin: auto;
+	background-color:  #A7A7A7; 
+    border-radius: 25px / 25px; 
+    padding-left:3%;
+    padding-right:3%;
+	font-family: 'Syne', 'Calibri', sans-serif;
+	color: white;
+	font-weight: 700;
+	font-size: 18px;
+}
+.mini-gallery_addbtnOn{
+	display : none;
 	height: 47px;
 	width: 60%;
 	line-height: 47px;
@@ -272,6 +321,7 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 }
 .divAddImg:hover{
 	background-color: #B1663C;
+	cursor: default;
 }
 .divAddImgBox p{
 	display: block;
@@ -306,7 +356,7 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	display: none;
 	padding-left: 1%;
 }
-.fa-pen-to-square{
+.modifier .fa-pen-to-square{
 	padding-right: 10%; 
 	font-weight: bold;
 	font-size: 18px;
@@ -430,7 +480,7 @@ margin: auto;
 }
 
 input[type="submit"]{
-	font-family: 'Syne';
+	font-family: 'Syne', 'Calibri', sans-serif;
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
@@ -463,8 +513,15 @@ main #login {
 	filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.1));
 }
 #login #se_connecter {
-	height: 36px;
+	height: 36px; 
 }
+
+#login #se_connecter:hover {
+	height: 36px; 
+	background-color: #B1663C;
+	cursor: default;
+}
+
 #login a {
 	text-align: center;
 	text-decoration: underline #3D3D3D;

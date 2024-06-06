@@ -12,6 +12,10 @@ function testifnull(truc) {
 
 function isConnected() {
   if (sessionStorage.getItem('connectOK') === 'true') {
+
+    document.getElementById("edition_ban").style.display = "block";
+
+
     document.getElementById("editbtn").style.display = "flex";
     const loginLink = document.querySelector('a[href="login.html"]');
     if (loginLink) {
@@ -19,7 +23,8 @@ function isConnected() {
       loginLink.textContent = "logout";
       loginLink.addEventListener('click', function() {sessionStorage.removeItem('connectOK'); 
                                                       sessionStorage.removeItem('token'); 
-                                                      sessionStorage.removeItem('userId');});
+                                                      sessionStorage.removeItem('userId');
+                            document.getElementById("edition_ban").style.display = "none";});
     }
   }
 }

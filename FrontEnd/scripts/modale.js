@@ -88,19 +88,32 @@ function resetPreview() {
   previewContainer.appendChild(baliseI);
 }
 
+//remise à zero du preview, des formulaires, et des galleries d'image.
 function resetAll() {
   resetPreview();
   document.getElementById("modal-windowAdd").reset();
+  document.getElementById("mg_validAddBtnOff").style.display = "block";
+  document.getElementById("mg_validAddBtn").style.display = "none";
   resetGallery();
   resetMiniGallery();
   chargerArticles();
 }
 
+//Bouton pour effacer preview, formulaires, etc.
 document.getElementById("reset").addEventListener("click", function() {
  resetAll();
 })
 
-
+// si tous les champs sont remplis, bouton vert
+function checkChamps() {
+  if (fileInput.value && document.getElementById("modalAddTitle").value && document.getElementById('cat-select').value) {
+    document.getElementById("mg_validAddBtnOff").style.display = "none";
+    document.getElementById("mg_validAddBtn").style.display = "block";
+  }
+}
+document.getElementById('filetoUpload').addEventListener('input', checkChamps);
+document.getElementById('modalAddTitle').addEventListener('input', checkChamps);
+document.getElementById('cat-select').addEventListener('input', checkChamps);
 
 // Envoi de l'image et de toutes les données connexes
 document.getElementById("mg_validAddBtn").addEventListener("click", async function() {
