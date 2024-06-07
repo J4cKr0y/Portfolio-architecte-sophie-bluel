@@ -101,7 +101,7 @@ document.getElementById("reset").addEventListener("click", function() {
 
 // si tous les champs sont remplis, bouton vert
 function checkChamps() {
-  if (fileInput.value && document.getElementById("modalAddTitle").value && document.getElementById('cat-select').value) {
+  if (fileInput.value && document.getElementById("modalAddTitle").value.trim() && document.getElementById('cat-select').value) {
     document.getElementById("mg_validAddBtnOff").style.display = "none";
     document.getElementById("mg_validAddBtn").style.display = "block";
   } else {

@@ -76,7 +76,7 @@ async function delWorkById(iD) {
       } 
 }
 
-var arts = []; 
+let arts = []; 
 async function chargerArticles() {
       // Requête GET works
       const reponse = await fetch(works);
