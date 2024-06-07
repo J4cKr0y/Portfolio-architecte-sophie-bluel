@@ -108,7 +108,7 @@ nav li img {
 	font-weight: bold;
 }
 
-a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
+a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus, .reset:hover {
 	color: #B1663C;
 	cursor: default;
 }
@@ -319,7 +319,7 @@ a:hover, li:hover, .modifier:hover, .fa-xmark:hover, .fa-xmark:focus {
 	align-content: center;
 	color: #306685;
 }
-.divAddImg:hover{
+.divAddImg:hover, .mini-gallery_addbtnOn:hover{
 	background-color: #B1663C;
 	cursor: default;
 }

@@ -5,17 +5,10 @@ const works = "http://localhost:5678/api/works/";
 //id(1à11), title, imageUrl, categoryId, userId, category{id, name,Objets}
 
 
-function testifnull(truc) {
-  if (typeof truc == 'undefined') {console.log(truc  +" n'existe pas");}
-  if (typeof truc == 'null') {console.log(truc  +" est null");}
-}
-
+//Mise à jour de la page si connecté/déconnecté
 function isConnected() {
   if (sessionStorage.getItem('connectOK') === 'true') {
-
     document.getElementById("edition_ban").style.display = "block";
-
-
     document.getElementById("editbtn").style.display = "flex";
     const loginLink = document.querySelector('a[href="login.html"]');
     if (loginLink) {
@@ -36,7 +29,7 @@ function boutonFiltreActif() {
 }
 
 async function chargerFiltres() {
-  // Effectuer la requête GET
+  // Requête GET categories
   const response = await fetch(cat);
   const categories = await response.json();
 
@@ -66,41 +59,45 @@ async function chargerFiltres() {
   
 }
 
+//Suppression
 async function delWorkById(iD) {
-    console.log("fonction delWorkById chargée, "+iD+"va être supprimé");
+    // Requête DELETE works
     const res = await fetch(works + iD, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('token')},});
     
       if (res.ok) {
-        resetGallery();
-        resetMiniGallery();
-        chargerArticles();
-        console.log('Élément exterminé! Mission accomplished!');
+        resetGallery(); //vide la gallerie
+        resetMiniGallery(); //vide la gallerie de la modale
+        chargerArticles(); //remplit les galleries avec la bdd
+        console.log('Élément exterminé!');
       } 
       else {
-        console.log('Suppression impossible. On ne parle pas de Bruno, no, no, no !');
         alert("Suppression impossible !");
       } 
 }
 
-var arts = []; //array
+var arts = []; //array pour stocker
 async function chargerArticles() {
-    try {
+      // Requête GET works
       const reponse = await fetch(works);
       const articles = await reponse.json();
       const conteneur = document.getElementsByClassName('gallery');
       const cont2 = document.getElementsByClassName('mini-gallery');
+      //stockage des infos pour utilisation ultérieure après triage
       arts = [];
       articles.forEach(article => {
-        arts.push({id: article.id, categoryId: article.categoryId,imageUrl: article.imageUrl,title: article.title});
+      arts.push({id: article.id, categoryId: article.categoryId,imageUrl: article.imageUrl,title: article.title});
+        // Creation figure + img gallerie
         const figure = document.createElement('figure');
         figure.innerHTML = `
         <img src="${article.imageUrl}" alt="Image de ${article.title}">
           <figcaption>${article.title}</figcaption>
         `;
+        // Creation figure + img gallerie modale
         const fig = document.createElement('figure');
         fig.innerHTML = `
         <img src="${article.imageUrl}" alt="Image de ${article.title}">
         `;
+        //Création icone poubelle
         const divTrash = document.createElement('div');
         divTrash.classList.add('divTrash');
         conteneur[0].appendChild(figure);
@@ -109,21 +106,22 @@ async function chargerArticles() {
         const trash = document.createElement('i');
         trash.className = "fa-solid fa-trash-can";
         trash.id = article.id;
+        //Écoute sur l'icone poubelle pour supprimer un article au clic
         trash.addEventListener('click', function() {
             delWorkById(trash.id);
           });
         divTrash.appendChild(trash);
       });
-    } catch (erreur) {
-      console.error('Il y a eu un problème avec l\'opération fetch: ' + erreur.message);
-    }
 }
+
+//vide la gallerie
 function resetGallery() {
   const conteneur = document.querySelector('.gallery');
   while (conteneur.firstChild) {
     conteneur.removeChild(conteneur.firstChild);
   }
 }
+//vide la gallerie de la modale
 function resetMiniGallery() {
   const conteneur = document.querySelector('.mini-gallery');
   while (conteneur.firstChild) {
@@ -131,10 +129,10 @@ function resetMiniGallery() {
   }
 }
 
+//fonction activée pour la catégorie objets
 function fonction2() {
   const conteneur = document.getElementsByClassName('gallery');
   for (let article of arts) {
-    console.log(article);
     if (article.categoryId == 1) {
       const figure = document.createElement('figure');
       figure.innerHTML = `
@@ -145,10 +143,11 @@ function fonction2() {
     };
   }
 }
+
+//fonction activée pour la catégorie Appartements
 function fonction3() {
   const conteneur = document.getElementsByClassName('gallery');
   for (let article of arts) {
-    console.log(article);
     if (article.categoryId == 2) {
       const figure = document.createElement('figure');
       figure.innerHTML = `
@@ -159,10 +158,11 @@ function fonction3() {
     };
   }
 }
+
+//fonction activée pour la catégorie Hotels
 function fonction4() {
   const conteneur = document.getElementsByClassName('gallery');
   for (let article of arts) {
-    console.log(article);
     if (article.categoryId == 3) {
       const figure = document.createElement('figure');
       figure.innerHTML = `
@@ -174,6 +174,7 @@ function fonction4() {
   }
 }
 
+//Triage
 function appelerFonction(valeur) {
   switch (valeur) {
     case 'tous':
@@ -197,9 +198,7 @@ function appelerFonction(valeur) {
   }
 }
 
-
-
-  // Appeler les fonctions au chargement de la page
+  // Appel au chargement de la page
   window.onload = function() {
     isConnected();
     chargerFiltres();

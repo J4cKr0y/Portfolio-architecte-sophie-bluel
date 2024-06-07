@@ -27,28 +27,20 @@ window.addEventListener('keydown', function(event) {
 const modalAddBtn = document.getElementById("mini-gallery_addbtn");
 modalAddBtn.addEventListener("click", function() {
   console.log("Mode Ajout sélectionné");
-  try {
     const mwindow = document.getElementById('modal-window');
     mwindow.style.display = "none";
     const mwindowAdd = document.getElementById('modal-windowAdd');
     mwindowAdd.style.display = "block";
-  } catch (error) {
-    console.error('Erreur:', error);
-  }
 });
 
 // Changement de fenêtre - retour en mode suppression
 const modalBackBtn = document.getElementById("modalBackBtn");
 modalBackBtn.addEventListener("click", function() {
   console.log("Mode Suppression sélectionné");
-  try {
     const mwindow = document.getElementById('modal-window');
     mwindow.style.display = "block";
     const mwindowAdd = document.getElementById('modal-windowAdd');
     mwindowAdd.style.display = "none";
-  } catch (error) {
-    console.error('Erreur:', error);
-  }
 });
 
 
@@ -109,40 +101,41 @@ function checkChamps() {
   if (fileInput.value && document.getElementById("modalAddTitle").value && document.getElementById('cat-select').value) {
     document.getElementById("mg_validAddBtnOff").style.display = "none";
     document.getElementById("mg_validAddBtn").style.display = "block";
+  } else {
+    document.getElementById("mg_validAddBtnOff").style.display = "block";
+    document.getElementById("mg_validAddBtn").style.display = "none";
   }
 }
-document.getElementById('filetoUpload').addEventListener('input', checkChamps);
-document.getElementById('modalAddTitle').addEventListener('input', checkChamps);
-document.getElementById('cat-select').addEventListener('input', checkChamps);
+document.getElementById('filetoUpload').addEventListener('change', checkChamps);
+document.getElementById('modalAddTitle').addEventListener('change', checkChamps);
+document.getElementById('cat-select').addEventListener('change', checkChamps);
 
 // Envoi de l'image et de toutes les données connexes
 document.getElementById("mg_validAddBtn").addEventListener("click", async function() {
+  
+  //Vérifie si tous les champs sont remplis
   if (!image) {
     alert("Veuillez ajouter une photo s'il vous plaît.");
     return;
   }
-
   const title = document.getElementById("modalAddTitle").value;
   if (!title) {
     alert("Veuillez sélectionner un titre s'il vous plaît.");
     return;
   }
-
   let categorySelect = document.getElementById("cat-select");
   let selectedOption = categorySelect.selectedOptions[0];
   let category = selectedOption ? selectedOption.value : '';
-
-  console.log("category : "+ category);
   if (!category) {
     alert("Veuillez sélectionner une catégorie s'il vous plaît.");
     return;
   }
 
+  // Requête POST works
   const formData = new FormData();
   formData.append("image", image); 
   formData.append("title", title);
   formData.append("category", category); 
-  console.log("formData : "+  toString.formData);
   const upload = await fetch(works, {
     method: "POST",
     headers: {
@@ -151,13 +144,13 @@ document.getElementById("mg_validAddBtn").addEventListener("click", async functi
     },
     body: formData,
   })
+
   if (upload.status != 201) {
-    console.error('ALARME ! Déposez votre souris à terre et mettez les mains derrière la tête !');
     alert("Erreur.");
     return;
 }
   if (upload.status == 201) {
     resetAll();
-    console.log('Élément envoyé! Mission accomplished!');
+    console.log('Élément envoyé!');
   }
 });

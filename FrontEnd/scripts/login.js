@@ -9,7 +9,7 @@ document.getElementById('se_connecter').addEventListener('click', async function
     const email = inputEmail.value;
     const password = inputPassword.value;
 
-    var data = {"email": email, "password": password};
+    let data = {"email": email, "password": password};
 
         const response = await fetch(login, {
             method: 'POST', 
@@ -17,13 +17,10 @@ document.getElementById('se_connecter').addEventListener('click', async function
             body: JSON.stringify(data),
         });
         if (response.status != 200) {
-            console.error('ALARME ! Déposez votre souris à terre et mettez les mains derrière la tête !');
             alert("Erreur dans l’identifiant ou le mot de passe.");
             return;
         }
-        const logs = await response.json();
-        console.log('Succès:', logs, 'Bienvenue chez vous :)');
-                
+        const logs = await response.json();    
             sessionStorage.setItem('connectOK', true); // Stocke le fait que la connexion a été un succès    
             sessionStorage.setItem('token', logs.token);
             sessionStorage.setItem('userId', logs.userId);
