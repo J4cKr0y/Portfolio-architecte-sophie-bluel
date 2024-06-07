@@ -1,3 +1,5 @@
+let previewContainer;
+
 // Ouverture
 const modal = document.getElementById("modal-back");
 const btn = document.getElementById("editbtn");
@@ -47,7 +49,8 @@ modalBackBtn.addEventListener("click", function() {
 // Preview de l'image chargée
 let image; 
 const fileInput = document.getElementById('filetoUpload');
-const previewContainer = document.getElementById('preview');
+previewContainer = document.getElementById('preview');
+
 fileInput.addEventListener('change', function() {
   if (fileInput.files.length > 0) {
     image = fileInput.files[0]; 
@@ -71,7 +74,7 @@ fileInput.addEventListener('change', function() {
 
 // Efacement de la preview, réinsertion de l'image fontawesone d'origine.
 function resetPreview() {
-  const previewContainer = document.getElementById('preview');
+  previewContainer = document.getElementById('preview');
   const baliseI = document.createElement('i');
   baliseI.className = "fa-regular fa-image";
   while (previewContainer.firstChild) {
@@ -119,7 +122,7 @@ document.getElementById("mg_validAddBtn").addEventListener("click", async functi
     return;
   }
   const title = document.getElementById("modalAddTitle").value;
-  if (!title) {
+  if (!title.trim()) {
     alert("Veuillez sélectionner un titre s'il vous plaît.");
     return;
   }
@@ -154,3 +157,26 @@ document.getElementById("mg_validAddBtn").addEventListener("click", async functi
     console.log('Élément envoyé!');
   }
 });
+
+/* Blocage des actions par défaut du drag */
+function dragOverHandler(ev) {
+  ev.preventDefault();
+}
+
+/* événement drop */
+function dropHandler(ev) {
+  ev.preventDefault();
+
+  const file = ev.dataTransfer.files[0]; 
+  if (file) {
+      let dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      fileInput.files = dataTransfer.files; 
+      const changeEvent = new Event('change');
+      fileInput.dispatchEvent(changeEvent); 
+  }
+}
+
+/* Écouteurs d'événements */
+previewContainer.addEventListener('dragover', dragOverHandler);
+previewContainer.addEventListener('drop', dropHandler);

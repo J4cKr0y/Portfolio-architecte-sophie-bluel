@@ -22,10 +22,11 @@ function isConnected() {
   }
 }
 
+//Ajoute la classe 'active' à l'élément cliqué et envoi vers la fonction de tri
 function boutonFiltreActif() {
   document.querySelectorAll('#filtre > div').forEach(el => el.classList.remove('active')); // Supprime la classe 'active' partout
-  this.classList.add('active'); // Ajouter la classe 'active' à l'élément cliqué
-  appelerFonction(this.id); //envoi vers la fonction de tri
+  this.classList.add('active'); 
+  appelerFonction(this.id); 
 }
 
 async function chargerFiltres() {
@@ -44,7 +45,7 @@ async function chargerFiltres() {
   categories.forEach(category => {
     const option = document.createElement('div');
     option.textContent = category.name;
-    option.id = category.name.split(' ')[0]; //(1er mot seulement)
+    option.id = category.name.split(' ')[0]; 
     option.addEventListener('click', boutonFiltreActif);
     divFiltre.appendChild(option);
   });
@@ -53,8 +54,8 @@ async function chargerFiltres() {
   const selectMenu = document.getElementById('cat-select');
   categories.forEach(category => {
     const opt = document.createElement('option');
-    opt.value = category.id; // La valeur de l'option 
-    opt.textContent = category.name; // Le texte affiché dans l'option
+    opt.value = category.id; 
+    opt.textContent = category.name; 
     selectMenu.appendChild(opt); })
   
 }
@@ -65,9 +66,9 @@ async function delWorkById(iD) {
     const res = await fetch(works + iD, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + sessionStorage.getItem('token')},});
     
       if (res.ok) {
-        resetGallery(); //vide la gallerie
-        resetMiniGallery(); //vide la gallerie de la modale
-        chargerArticles(); //remplit les galleries avec la bdd
+        resetGallery(); 
+        resetMiniGallery(); 
+        chargerArticles(); 
         console.log('Élément exterminé!');
       } 
       else {
@@ -75,24 +76,24 @@ async function delWorkById(iD) {
       } 
 }
 
-var arts = []; //array pour stocker
+var arts = []; 
 async function chargerArticles() {
       // Requête GET works
       const reponse = await fetch(works);
       const articles = await reponse.json();
       const conteneur = document.getElementsByClassName('gallery');
       const cont2 = document.getElementsByClassName('mini-gallery');
-      //stockage des infos pour utilisation ultérieure après triage
+      
       arts = [];
       articles.forEach(article => {
       arts.push({id: article.id, categoryId: article.categoryId,imageUrl: article.imageUrl,title: article.title});
-        // Creation figure + img gallerie
+        
         const figure = document.createElement('figure');
         figure.innerHTML = `
         <img src="${article.imageUrl}" alt="Image de ${article.title}">
           <figcaption>${article.title}</figcaption>
         `;
-        // Creation figure + img gallerie modale
+        
         const fig = document.createElement('figure');
         fig.innerHTML = `
         <img src="${article.imageUrl}" alt="Image de ${article.title}">
@@ -106,7 +107,6 @@ async function chargerArticles() {
         const trash = document.createElement('i');
         trash.className = "fa-solid fa-trash-can";
         trash.id = article.id;
-        //Écoute sur l'icone poubelle pour supprimer un article au clic
         trash.addEventListener('click', function() {
             delWorkById(trash.id);
           });

@@ -5,7 +5,7 @@ const loginError = document.getElementById("login_error");
 const submitButton = document.getElementById("se_connecter");
 
 document.getElementById('se_connecter').addEventListener('click', async function(event) {
-    event.preventDefault(); // Empêche l'envoi du formulaire
+    event.preventDefault(); 
     const email = inputEmail.value;
     const password = inputPassword.value;
 
@@ -21,8 +21,8 @@ document.getElementById('se_connecter').addEventListener('click', async function
             return;
         }
         const logs = await response.json();    
-            sessionStorage.setItem('connectOK', true); // Stocke le fait que la connexion a été un succès    
+            sessionStorage.setItem('connectOK', true); 
             sessionStorage.setItem('token', logs.token);
             sessionStorage.setItem('userId', logs.userId);
-            window.location.href = "index.html"; // Redirige vers index.html en cas de succès
+            window.location.href = "index.html"; 
 });
