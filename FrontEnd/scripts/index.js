@@ -117,7 +117,12 @@ async function chargerArticles() {
     trash.className = "fa-solid fa-trash-can";
     trash.id = article.id;
     trash.addEventListener("click", function () {
-      delWorkById(trash.id);
+      const confirmation = confirm(
+        "Êtes-vous sûr de vouloir supprimer cet élément ?",
+      );
+      if (confirmation) {
+        delWorkById(trash.id);
+      }
     });
     divTrash.appendChild(trash);
   });
