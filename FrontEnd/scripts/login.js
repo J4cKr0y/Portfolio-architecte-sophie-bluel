@@ -4,25 +4,42 @@ const inputPassword = document.getElementById("password");
 const loginError = document.getElementById("login_error");
 const submitButton = document.getElementById("se_connecter");
 
-document.getElementById('se_connecter').addEventListener('click', async function(event) {
-    event.preventDefault(); 
+document
+  .getElementById("se_connecter")
+  .addEventListener("click", async function (event) {
+    event.preventDefault();
     const email = inputEmail.value;
     const password = inputPassword.value;
 
-    let data = {"email": email, "password": password};
+    let data = { email: email, password: password };
 
-        const response = await fetch(login, {
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify(data),
-        });
-        if (response.status != 200) {
-            alert("Erreur dans l’identifiant ou le mot de passe.");
-            return;
-        }
-        const logs = await response.json();    
-            sessionStorage.setItem('connectOK', true); 
-            sessionStorage.setItem('token', logs.token);
-            sessionStorage.setItem('userId', logs.userId);
-            window.location.href = "index.html"; 
+    const response = await fetch(login, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (response.status != 200) {
+      alert("Erreur dans l’identifiant ou le mot de passe.");
+      return;
+    }
+    const logs = await response.json();
+    sessionStorage.setItem("connectOK", true);
+    sessionStorage.setItem("token", logs.token);
+    sessionStorage.setItem("userId", logs.userId);
+    window.location.href = "index.html";
+  });
+
+function submitByEnter(event, button) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    button.click();
+  }
+}
+
+inputEmail.addEventListener("keydown", function (event) {
+  submitByEnter(event, document.getElementById("se_connecter"));
+});
+
+inputPassword.addEventListener("keydown", function (event) {
+  submitByEnter(event, document.getElementById("se_connecter"));
 });
