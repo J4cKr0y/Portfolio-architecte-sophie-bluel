@@ -168,6 +168,7 @@ document
     }
     if (upload.status == 201) {
       resetAll();
+      modalBackBtn.click();
     }
   });
 

@@ -74,7 +74,7 @@ async function delWorkById(iD) {
   if (res.ok) {
     resetGallery();
     resetMiniGallery();
-    chargerArticles();
+    await Promise.all([chargerArticles()]);
   } else {
     alert("Suppression impossible !");
   }
@@ -82,6 +82,7 @@ async function delWorkById(iD) {
 
 let arts = [];
 async function chargerArticles() {
+  console.log("charger");
   // Requête GET works
   const reponse = await fetch(works);
   const articles = await reponse.json();
@@ -130,6 +131,7 @@ async function chargerArticles() {
 
 //vide la gallerie
 function resetGallery() {
+  console.log("reset g");
   const conteneur = document.querySelector(".gallery");
   while (conteneur.firstChild) {
     conteneur.removeChild(conteneur.firstChild);
@@ -137,6 +139,7 @@ function resetGallery() {
 }
 //vide la gallerie de la modale
 function resetMiniGallery() {
+  console.log("reset mg");
   const conteneur = document.querySelector(".mini-gallery");
   while (conteneur.firstChild) {
     conteneur.removeChild(conteneur.firstChild);
