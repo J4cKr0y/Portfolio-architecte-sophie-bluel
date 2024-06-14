@@ -12,7 +12,7 @@ document
     const password = inputPassword.value;
 
     let data = { email: email, password: password };
-
+    /****  Requête POST login  ****/
     const response = await fetch(login, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

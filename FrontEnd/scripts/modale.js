@@ -148,7 +148,7 @@ document
       return;
     }
 
-    // Requête POST works
+    /****  Requête POST works  ****/
     const formData = new FormData();
     formData.append("image", image);
     formData.append("title", title);

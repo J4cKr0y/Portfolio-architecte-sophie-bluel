@@ -33,7 +33,7 @@ function boutonFiltreActif() {
 }
 
 async function chargerFiltres() {
-  // Requête GET categories
+  /****  Requête GET categories  ****/
   const response = await fetch(cat);
   const categories = await response.json();
 
@@ -65,7 +65,7 @@ async function chargerFiltres() {
 
 //Suppression
 async function delWorkById(iD) {
-  // Requête DELETE works
+  /**** Requête DELETE works  ****/
   const res = await fetch(works + iD, {
     method: "DELETE",
     headers: { Authorization: "Bearer " + sessionStorage.getItem("token") },
@@ -83,7 +83,7 @@ async function delWorkById(iD) {
 let arts = [];
 async function chargerArticles() {
   console.log("charger");
-  // Requête GET works
+  /**** Requête GET works ****/
   const reponse = await fetch(works);
   const articles = await reponse.json();
   const conteneur = document.getElementsByClassName("gallery");
@@ -147,7 +147,7 @@ function resetMiniGallery() {
 }
 
 //fonction activée pour la catégorie objets
-function fonction2() {
+function chargerObjets() {
   const conteneur = document.getElementsByClassName("gallery");
   for (let article of arts) {
     if (article.categoryId == 1) {
@@ -162,7 +162,7 @@ function fonction2() {
 }
 
 //fonction activée pour la catégorie Appartements
-function fonction3() {
+function chargerApparts() {
   const conteneur = document.getElementsByClassName("gallery");
   for (let article of arts) {
     if (article.categoryId == 2) {
@@ -177,10 +177,25 @@ function fonction3() {
 }
 
 //fonction activée pour la catégorie Hotels
-function fonction4() {
+function chargerHotels() {
   const conteneur = document.getElementsByClassName("gallery");
   for (let article of arts) {
     if (article.categoryId == 3) {
+      const figure = document.createElement("figure");
+      figure.innerHTML = `
+      <img src="${article.imageUrl}" alt="Image de ${article.title}">
+        <figcaption>${article.title}</figcaption>
+      `;
+      conteneur[0].appendChild(figure);
+    }
+  }
+}
+
+//fonction activée pour la catégorie Autres
+function chargerAutres() {
+  const conteneur = document.getElementsByClassName("gallery");
+  for (let article of arts) {
+    if (article.categoryId == 4) {
       const figure = document.createElement("figure");
       figure.innerHTML = `
       <img src="${article.imageUrl}" alt="Image de ${article.title}">
@@ -200,15 +215,19 @@ function appelerFonction(valeur) {
       break;
     case "Objets":
       resetGallery();
-      fonction2();
+      chargerObjets();
       break;
     case "Appartements":
       resetGallery();
-      fonction3();
+      chargerApparts();
       break;
     case "Hotels":
       resetGallery();
-      fonction4();
+      chargerHotels();
+      break;
+    case "Autres":
+      resetGallery();
+      chargerAutres();
       break;
     default:
       console.log("Aucune fonction correspondante");
