@@ -27,7 +27,7 @@ function isConnected() {
 function boutonFiltreActif() {
   document
     .querySelectorAll("#filtre > div")
-    .forEach((el) => el.classList.remove("active")); // Supprime la classe 'active' partout
+    .forEach((el) => el.classList.remove("active"));
   this.classList.add("active");
   appelerFonction(this.id);
 }
@@ -43,12 +43,16 @@ async function chargerFiltres() {
   tous.classList.add("active");
   tous.id = "tous";
   tous.textContent = "Tous";
+  tous.dataset.categoryId = tous.id;
+  tous.classList.add("category");
   tous.addEventListener("click", boutonFiltreActif);
   divFiltre.appendChild(tous);
   categories.forEach((category) => {
     const option = document.createElement("div");
     option.textContent = category.name;
     option.id = category.name.split(" ")[0];
+    option.dataset.categoryId = category.id;
+    option.classList.add("category");
     option.addEventListener("click", boutonFiltreActif);
     divFiltre.appendChild(option);
   });
@@ -82,7 +86,8 @@ async function delWorkById(iD) {
 
 let arts = [];
 async function chargerArticles() {
-  console.log("charger");
+  resetGallery();
+  resetMiniGallery();
   /**** Requête GET works ****/
   const reponse = await fetch(works);
   const articles = await reponse.json();
@@ -131,7 +136,6 @@ async function chargerArticles() {
 
 //vide la gallerie
 function resetGallery() {
-  console.log("reset g");
   const conteneur = document.querySelector(".gallery");
   while (conteneur.firstChild) {
     conteneur.removeChild(conteneur.firstChild);
@@ -139,99 +143,36 @@ function resetGallery() {
 }
 //vide la gallerie de la modale
 function resetMiniGallery() {
-  console.log("reset mg");
   const conteneur = document.querySelector(".mini-gallery");
   while (conteneur.firstChild) {
     conteneur.removeChild(conteneur.firstChild);
   }
 }
 
-//fonction activée pour la catégorie objets
-function chargerObjets() {
-  const conteneur = document.getElementsByClassName("gallery");
-  for (let article of arts) {
-    if (article.categoryId == 1) {
-      const figure = document.createElement("figure");
-      figure.innerHTML = `
-      <img src="${article.imageUrl}" alt="Image de ${article.title}">
-        <figcaption>${article.title}</figcaption>
-      `;
-      conteneur[0].appendChild(figure);
-    }
-  }
-}
-
-//fonction activée pour la catégorie Appartements
-function chargerApparts() {
-  const conteneur = document.getElementsByClassName("gallery");
-  for (let article of arts) {
-    if (article.categoryId == 2) {
-      const figure = document.createElement("figure");
-      figure.innerHTML = `
-      <img src="${article.imageUrl}" alt="Image de ${article.title}">
-        <figcaption>${article.title}</figcaption>
-      `;
-      conteneur[0].appendChild(figure);
-    }
-  }
-}
-
-//fonction activée pour la catégorie Hotels
-function chargerHotels() {
-  const conteneur = document.getElementsByClassName("gallery");
-  for (let article of arts) {
-    if (article.categoryId == 3) {
-      const figure = document.createElement("figure");
-      figure.innerHTML = `
-      <img src="${article.imageUrl}" alt="Image de ${article.title}">
-        <figcaption>${article.title}</figcaption>
-      `;
-      conteneur[0].appendChild(figure);
-    }
-  }
-}
-
-//fonction activée pour la catégorie Autres
-function chargerAutres() {
-  const conteneur = document.getElementsByClassName("gallery");
-  for (let article of arts) {
-    if (article.categoryId == 4) {
-      const figure = document.createElement("figure");
-      figure.innerHTML = `
-      <img src="${article.imageUrl}" alt="Image de ${article.title}">
-        <figcaption>${article.title}</figcaption>
-      `;
-      conteneur[0].appendChild(figure);
+//fonction activée pour une catégorie donnée
+async function chargerCategorie(categoryId) {
+  resetGallery();
+  if (categoryId === "tous") {
+    await chargerArticles();
+  } else {
+    const conteneur = document.getElementsByClassName("gallery");
+    for (let article of arts) {
+      if (article.categoryId == categoryId) {
+        const figure = document.createElement("figure");
+        figure.innerHTML = `
+        <img src="${article.imageUrl}" alt="Image de ${article.title}">
+          <figcaption>${article.title}</figcaption>
+        `;
+        conteneur[0].appendChild(figure);
+      }
     }
   }
 }
 
 //Triage
-function appelerFonction(valeur) {
-  switch (valeur) {
-    case "tous":
-      resetGallery();
-      chargerArticles();
-      break;
-    case "Objets":
-      resetGallery();
-      chargerObjets();
-      break;
-    case "Appartements":
-      resetGallery();
-      chargerApparts();
-      break;
-    case "Hotels":
-      resetGallery();
-      chargerHotels();
-      break;
-    case "Autres":
-      resetGallery();
-      chargerAutres();
-      break;
-    default:
-      console.log("Aucune fonction correspondante");
-  }
+async function appelerFonction(valeur) {
+  const categoryId = document.getElementById(valeur).dataset.categoryId;
+  await chargerCategorie(categoryId);
 }
 
 // Appel au chargement de la page
